@@ -1,55 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {
-background-color: gray;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+<link rel="stylesheet" type="text/css" href="css/admin.css" />
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-.btn {
-    border: none;
-    background-color: inherit;
-    padding: 14px 28px;
-    font-size: 16px;
-    cursor: pointer;
-    display: inline-block;
-}
-.default {
-    color: black;
-}
-
-.default:hover {
-    background: #e7e7e7;
-}
-
-</style>
 </head>
-<body align="center">
+<body>
 
-<h2>ADMIN BOARD</h2>
+ <div class="topnav">
+  <a class="active" href="#dashboard">dashboard</a>  
+ <a  href="index.html">Home</a>
+  <a href="#account">my account</a>
+  
+</div> 
 
+<div class="sidenav">
+  <a href="#users">users</a>
+  <a href="#aproved">approved requests</a>
+  <a href="#disapproved">disapproved requests</a>
+  <a href="#resolved">resolved requests</a>  
+	<a href="index.html">logout</a>
+	<a href="#profile">my profile</a>
+	 <a href="#charts">charts</a> 
+	<a href="#notificatiions">notifications</a>
+</div>
+
+<div class="main">
+  <h2>Admin dashboard</h2>  
+
+			
 <table>
   <tr>
     <th>Request Details</th>
     <th>Approve Request</th>    
 	<th>Disapprove Request</th>
-    <th>Resolve Requset</th>
+    <th>Resolve Request</th>
   </tr>
   <tr>
     <td> </td>
@@ -89,5 +75,11 @@ tr:nth-child(even) {
   </tr>
 </table>
 
+
+			
+						
+
+</div>
+     
 </body>
-</html>
+</html> 
