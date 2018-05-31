@@ -134,11 +134,66 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         assert b'missing request information' in response.data
 
-    
+     def test_get_request_success(self):
+        response=self.get_request("1");
+        self.assertEqual(response.status_code, 200)
+        assert b'successfully got request' in response.data
+    def test_get_request_empty_id(self):
+        response=self.get_request("");
+        self.assertEqual(response.status_code, 200)
+        assert b'request does not exist' in response.data
+
+    def test_get_requests_success(self):
+        response=self.get_requests("p@gmail.com");
+        self.assertEqual(response.status_code, 200)
+        assert b'requests succesfully fetched' in response.data
+        
+    def test_get_requests_empty_email(self):
+        response=self.get_requests("");
+        self.assertEqual(response.status_code, 200)
+        assert b'requests not succesfully fetched' in response.data 
+
+    def test_delete_request_empty_id(self):
+        response=self.delete_requests("");
+        self.assertEqual(response.status_code, 200)
+        assert b'requests not deleted succesfully ' in response.data
+        
+    def test_delete_request_success(self):
+        response=self.delete_requests("1");
+        self.assertEqual(response.status_code, 200)
+        assert b'requests deleted succesfully ' in response.data
+           
+    def test_delete_request_not_exist(self):
+        response=self.delete_requests("ghvv7999");
+        self.assertEqual(response.status_code, 200)
+        assert b'request does not exist' in response.data    
+        
+     def test_get_request_not_exist(self):
+        response=self.get_request("ghvv7999");
+        self.assertEqual(response.status_code, 200)
+        assert b'request does not exist' in response.data
+
+    def test_edit_request(self):
+        response=self.edit_request("1","title","details");
+        self.assertEqual(response.status_code, 200)
+        assert b'request succesfully modified' in response.data
+        
+    def test_edit_request_no_title(self):
+        response=self.edit_request("1","","details");
+        self.assertEqual(response.status_code, 200)
+        assert b'request missing title' in response.data
+        
+    def test_edit_request_no_details(self):
+        response=self.edit_request("1","title","");
+        self.assertEqual(response.status_code, 200)
+        assert b'request missing details' in response.data
+        
     # executed after each test
     def tearDown(self):
         pass
-            
+
+    
+        
 ###############
 #### tests ####
 ###############
