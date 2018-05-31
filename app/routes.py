@@ -43,10 +43,6 @@ def editrequest():
 def deleterequest():
     pass
 
-@app.route('/modifyrequest')
-
-def modifyrequest():
-    pass
 @app.route('/createrequest')
 
 def createrequest():
