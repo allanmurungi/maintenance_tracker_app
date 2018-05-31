@@ -109,17 +109,36 @@ class BasicTests(unittest.TestCase):
     def get_requests(self,email):
         return self.app.get('/getrequests',data=dict(email=email),follow_redirects=True);
         
-    def create_request(self):
+    def create_request(self,requesttitle,requestdetails):
         return self.app.post('/createrequest',data=dict(requesttitle=requesttitle,requestdetails=requestdetails),follow_redirects=True);
+    def delete_request(self,req_id):
+        return self.app.get('/deleterequest',data=dict(req_id=req_id),follow_redirects=True);
+        
+    def test_create_request(self):
+        response=self.create_request("Water flow","The water flow is not consistent in the evenings.");
+        self.assertEqual(response.status_code, 200)
+        assert b'request has been sent' in response.data;
+        
+    def test_create_request_missing_title(self):
+        response=self.create_request("","The water flow is not consistent in the evenings.");
+        self.assertEqual(response.status_code, 200)
+        assert b'missing title on request' in response.data    
+ 
+     def test_create_request_missing_details(self):
+        response=self.create_request("Water flow","");
+        self.assertEqual(response.status_code, 200)
+        assert b'missing request details' in response.data
+
+    def test_create_request(self):
+        response=self.create_request("","");
+        self.assertEqual(response.status_code, 200)
+        assert b'missing request information' in response.data
 
     
     # executed after each test
     def tearDown(self):
         pass
-    
-    
- 
- 
+            
 ###############
 #### tests ####
 ###############
