@@ -1,50 +1,62 @@
 from app import app
 from flask import jsonify
-
-@app.route('/')
-@app.route('/index')
+from flask_restful import Resource, Api
 
 
-def index():
-    return jsonify({'message': 'maintenance tracker endpoints!'});
+api = Api(app)
+
+
+
+class myIndex(Resource):
+    def index():
+        return jsonify({'message': 'maintenance tracker endpoints!'});
     
 
-@app.route('/login')
 
-def login():
-    pass
+class login(Resource):
+    def post():
+        pass
 
 
-@app.route('/signup')
+class signup(Resource):
 
-def signup():
-    pass
+    def post():
+        pass
 
-@app.route('/logout')
+class logout(Resource):
 
-def logout():
-    pass
+    def get():
+        pass
 
-@app.route('/getrequests')
+class getrequests(Resource):
 
-def getrequests():
-    pass
-@app.route('/getrequest')
+    def get():
+        pass
+    
+class getrequest(Resource):
 
-def getrequest():
-    pass
-@app.route('/editrequest')
+    def get():
+        pass
 
-def editrequest():
-    pass
+class editrequest(Resource):
 
-@app.route('/deleterequest')
+    def editrequest():
+        pass
 
-def deleterequest():
-    pass
+class deleterequest(Resource):
 
-@app.route('/createrequest')
+    def get():
+        pass
 
-def createrequest():
-    pass
+class createrequest(Resource):
+
+    def post():
+        pass
+
+
+api.add_resource(createrequest, '/createrequest')
+api.add_resource(getrequest, '/getrequest/<string:req_id>')
+api.add_resource(getrequests, '/getrequests/<string:email>')
+api.add_resource(editrequest, '/editrequest/<string:req_id>')
+api.add_resource(deleterequest, '/deleterequest/<string:req_id>')
 
