@@ -3,7 +3,7 @@ from flask import jsonify
 from flask_restful import Resource, Api, reqparse
 from models import UserModel
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-
+import random
 
 
 parser = reqparse.RequestParser()
@@ -12,7 +12,31 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 
 api = Api(app)
 
+""" A dictionary to hold the requests"""
+Requets={}
 
+class myrequest{
+    """ A template class for the request object """
+    def __init__(self,req_title,req_details,req_owner):
+
+        self.title=req_title
+        self.details=req_details
+        self.req_id=random.randint(1,1000000)
+        self.req_owner=req_owner
+    
+    def getId(self):
+        return self.req_id
+
+    def getreqtitle(self):
+        return self.title
+
+    def getreqdetails(self):
+        return self.details
+
+    def getreqemail(self):
+        return self.req_owner
+
+    }
 
 class myIndex(Resource):
     def index():
@@ -104,28 +128,53 @@ class UserLogoutRefresh(Resource):
         
 class getrequests(Resource):
 
-    def get():
+    def get(self):
+        
         pass
     
 class getrequest(Resource):
 
-    def get():
+    def get(self,req_id):
+        if(Requests[req_id]==None):
+            return 'request does not exist'
+        if(req_id==""):
+            return 'request does not exist'
+        return {"message":"successfully got request","req_title":Requests[req_id].getreqtitle,"req_details":Requests[req_id].getreqdetails,"req_author":Requests[req_id].getreqemail
+                ,"req_id":Requests[req_id].getId}
         pass
 
 class editrequest(Resource):
 
-    def editrequest():
+    def editrequest(self):
         pass
 
 class deleterequest(Resource):
 
-    def get():
+    def get(self,req_id):
+        if(Requests[req_id]==None):
+            return 'request does not exist'
+        if(req_id==""):
+            return 'requests not deleted succesfully'
+        
+        del Requests[req_id]
+        return 'requests deleted succesfully'
         pass
 
 class createrequest(Resource):
 
-    def post():
-        pass
+    def post(self):
+        if(data['requesttitle']=="" and data['requestdetails']!=""):
+            return 'missing title on request'
+
+        elif(data['requesttitle']!="" and data['requestdetails']==""):
+            return 'missing request details'
+
+        elif(data['requesttitle']=="" and data['requestdetails']==""):
+            return 'missing request information'
+        req=myrequest(data['requesttitle'],data['requestdetails'])   
+        Requests.update({req.getId: myrequest})
+        return "request has been sent"
+        
 
 api.add_resource(login, '/login')
 api.add_resource(login, '/signup')
