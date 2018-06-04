@@ -24,15 +24,15 @@ class login(Resource):
     def post(self):
         data = parser.parse_args()
         current_user = UserModel.find_by_email(data['email'])
-        if(data['email']==""){
+        if(data['email']==""):
             return {'message':'no username/email entered'}
-            }
-        elif(data['password']==""){
+            
+        elif(data['password']==""):
             return {'message':'no password given'}
-            }
-        elif(data['email']=="" and data['email']=="" ){
+            
+        elif(data['email']=="" and data['email']=="" ):
             return {'message':'you have not entered email and password'}
-            }
+            
         if not current_user:
             return {'message': 'User doesn\'t exist'}
         
@@ -127,7 +127,9 @@ class createrequest(Resource):
     def post():
         pass
 
-
+api.add_resource(login, '/login')
+api.add_resource(login, '/signup')
+api.add_resource(login, '/logout')
 api.add_resource(createrequest, '/createrequest')
 api.add_resource(getrequest, '/getrequest/<string:req_id>')
 api.add_resource(getrequests, '/getrequests/<string:email>')
