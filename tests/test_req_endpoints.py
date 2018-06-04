@@ -42,17 +42,17 @@ class BasicTests(unittest.TestCase):
         
     def test_create_request_missing_title(self):
         response=self.create_request("","The water flow is not consistent in the evenings.","p@gmail.com");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         assert b'missing title on request' in response.data    
  
      def test_create_request_missing_details(self):
         response=self.create_request("Water flow","","p@gmail.com");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         assert b'missing request details' in response.data
 
     def test_create_request(self):
         response=self.create_request("","","p@gmail.com");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         assert b'missing request information' in response.data
 
      def test_get_request_success(self):
@@ -76,22 +76,22 @@ class BasicTests(unittest.TestCase):
 
     def test_delete_request_empty_id(self):
         response=self.delete_requests("");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         assert b'requests not deleted succesfully ' in response.data
         
     def test_delete_request_success(self):
         response=self.delete_requests("1");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 204)
         assert b'requests deleted succesfully' in response.data
            
     def test_delete_request_not_exist(self):
         response=self.delete_requests("ghvv7999");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)
         assert b'request does not exist' in response.data    
         
      def test_get_request_not_exist(self):
         response=self.get_request("ghvv7999");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)
         assert b'request does not exist' in response.data
 
     def test_edit_request(self):
@@ -101,12 +101,12 @@ class BasicTests(unittest.TestCase):
         
     def test_edit_request_no_title(self):
         response=self.edit_request("1","","details");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         assert b'request missing title' in response.data
         
     def test_edit_request_no_details(self):
         response=self.edit_request("1","title","");
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         assert b'request missing details' in response.data
         
     # executed after each test

@@ -157,7 +157,7 @@ class deleterequest(Resource):
             return 'requests not deleted succesfully'
         
         del Requests[req_id]
-        return 'requests deleted succesfully'
+        return 'requests deleted succesfully',200
         pass
 
 class createrequest(Resource):
@@ -173,7 +173,7 @@ class createrequest(Resource):
             return 'missing request information'
         req=myrequest(data['requesttitle'],data['requestdetails'])   
         Requests.update({req.getId: myrequest})
-        return "request has been sent"
+        return "request has been sent",201
         
 
 api.add_resource(login, '/login')
