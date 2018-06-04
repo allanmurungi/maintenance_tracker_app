@@ -1,0 +1,16 @@
+language: python
+python:
+	- "3.5"
+	- "3.6"
+	
+#command for installing dependencies
+
+ install:
+ 		- pip instal -r requirements.txt
+		 
+script:
+
+	- python test_login.py
+	- python test_logout.py
+	- python test_req_endpoints.py
+	- python test_signup.py  		 		
