@@ -24,9 +24,17 @@ class login(Resource):
     def post(self):
         data = parser.parse_args()
         current_user = UserModel.find_by_email(data['email'])
-
+        if(data['email']==""){
+            return {'message':'no username/email entered'}
+            }
+        elif(data['password']==""){
+            return {'message':'no password given'}
+            }
+        elif(data['email']=="" and data['email']=="" ){
+            return {'message':'you have not entered email and password'}
+            }
         if not current_user:
-            return {'message': 'User {} doesn\'t exist'.format(data['email'])}
+            return {'message': 'User doesn\'t exist'}
         
         if UserModel.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(identity = data['email'])
@@ -45,7 +53,7 @@ class signup(Resource):
     def post(self):
         data = parser.parse_args()
         if UserModel.find_by_email(data['email']):
-            return {'message': 'User {} already exists'. format(data['email'])}
+            return {'message': 'User already exists'}
         new_user = UserModel(
             email = data['email'],
             password = UserModel.generate_hash(data['password'])

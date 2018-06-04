@@ -43,8 +43,18 @@ class BasicTests(unittest.TestCase):
         response=self.login("p@gmail.com","qwertyuiop");
         self.assertEqual(response.status_code, 200)
         assert b'you have logged in succesfully' in response.data
-        
 
+            
+    def test_succesful_login_fail(self):
+        response=self.login("x@gmail.com","hhfhf");
+        self.assertEqual(response.status_code, 200)
+        assert b"Wrong credentials" in response.data
+        
+    def test_succesful_login_user_not_exist(self):
+        response=self.login("x@gmail.com","qwertyuiop");
+        self.assertEqual(response.status_code, 200)
+        assert b'User doesn\'t exist' in response.data
+        
     def test_login_empty_params(self):
         response=self.login("","");
         self.assertEqual(response.status_code, 200)
